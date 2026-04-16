@@ -4,7 +4,7 @@ import (
 	"reflect"
 	"testing"
 
-	natsrpcv1 "server/nats_rpc/proto/natsrpc/v1"
+	natsrpcv1 "github.com/joy999/nats_rpc/proto/natsrpc/v1"
 )
 
 func TestRegistryRegisterAndLookup(t *testing.T) {
