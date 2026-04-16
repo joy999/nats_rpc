@@ -1,10 +1,10 @@
-module server/nats_rpc/adapters/goframe
+module github.com/joy999/nats_rpc/adapters/goframe
 
 go 1.26.0
 
 require (
 	github.com/gogf/gf/v2 v2.10.0
-	server/nats_rpc v0.0.0
+	github.com/joy999/nats_rpc v0.0.0
 )
 
 require (
@@ -28,4 +28,4 @@ require (
 	google.golang.org/protobuf v1.36.11 // indirect
 )
 
-replace server/nats_rpc => ../../
+replace github.com/joy999/nats_rpc => ../../

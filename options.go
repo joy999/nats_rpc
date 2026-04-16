@@ -4,8 +4,8 @@ import (
 	"context"
 	"time"
 
-	natsrpcv1 "server/nats_rpc/proto/natsrpc/v1"
-	"server/nats_rpc/registry"
+	natsrpcv1 "github.com/joy999/nats_rpc/proto/natsrpc/v1"
+	"github.com/joy999/nats_rpc/registry"
 )
 
 type TracePropagator interface {
