@@ -1,4 +1,4 @@
-module server/nats_rpc
+module github.com/joy999/nats_rpc
 
 go 1.26.0
 

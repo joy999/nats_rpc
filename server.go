@@ -4,7 +4,7 @@ import (
 	"context"
 	"fmt"
 
-	natsrpcv1 "server/nats_rpc/proto/natsrpc/v1"
+	natsrpcv1 "github.com/joy999/nats_rpc/proto/natsrpc/v1"
 
 	"github.com/nats-io/nats.go"
 	"google.golang.org/protobuf/proto"

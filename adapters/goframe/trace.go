@@ -6,8 +6,8 @@ import (
 	"github.com/gogf/gf/v2/net/gtrace"
 	"github.com/gogf/gf/v2/os/gctx"
 
-	natsrpc "server/nats_rpc"
-	natsrpcv1 "server/nats_rpc/proto/natsrpc/v1"
+	natsrpc "github.com/joy999/nats_rpc"
+	natsrpcv1 "github.com/joy999/nats_rpc/proto/natsrpc/v1"
 )
 
 var _ natsrpc.TracePropagator = (*TracePropagator)(nil)

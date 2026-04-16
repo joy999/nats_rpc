@@ -4,8 +4,8 @@ import (
 	"context"
 	"fmt"
 
-	natsrpcv1 "server/nats_rpc/proto/natsrpc/v1"
-	"server/nats_rpc/registry"
+	natsrpcv1 "github.com/joy999/nats_rpc/proto/natsrpc/v1"
+	"github.com/joy999/nats_rpc/registry"
 
 	"google.golang.org/protobuf/proto"
 	"google.golang.org/protobuf/types/known/wrapperspb"
