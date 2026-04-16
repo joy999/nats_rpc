@@ -22,6 +22,7 @@ type Option func(*config)
 type config struct {
 	timeout         time.Duration
 	registry        *registry.Registry
+	discovery       *Discovery
 	trace           TracePropagator
 	asyncError      AsyncErrorHandler
 	errorEncoder    ErrorEncoder
@@ -32,6 +33,7 @@ func defaultConfig() config {
 	return config{
 		timeout:         30 * time.Second,
 		registry:        nil,
+		discovery:       nil,
 		trace:           nil,
 		asyncError:      func(context.Context, error) {},
 		errorEncoder:    defaultErrorEncoder,
@@ -50,6 +52,13 @@ func WithTimeout(timeout time.Duration) Option {
 func WithRegistry(reg *registry.Registry) Option {
 	return func(cfg *config) {
 		cfg.registry = reg
+	}
+}
+
+
+func WithDiscovery(discovery *Discovery) Option {
+	return func(cfg *config) {
+		cfg.discovery = discovery
 	}
 }
 
