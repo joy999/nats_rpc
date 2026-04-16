@@ -36,7 +36,6 @@ func TestDefaultConfig(t *testing.T) {
 func TestOptionsApply(t *testing.T) {
 	cfg := defaultConfig()
 	reg := registry.New()
-	discovery := newDiscoveryWithKV(newMemKV(), AllowAllAuthenticator{})
 	trace := mockTrace{}
 	called := false
 	async := func(context.Context, error) { called = true }
@@ -49,7 +48,6 @@ func TestOptionsApply(t *testing.T) {
 
 	WithTimeout(2 * time.Second)(&cfg)
 	WithRegistry(reg)(&cfg)
-	WithDiscovery(discovery)(&cfg)
 	WithTracePropagator(trace)(&cfg)
 	WithAsyncErrorHandler(async)(&cfg)
 	WithErrorEncoder(encoder)(&cfg)
@@ -59,9 +57,6 @@ func TestOptionsApply(t *testing.T) {
 	}
 	if cfg.registry != reg {
 		t.Fatal("registry option not applied")
-	}
-	if cfg.discovery != discovery {
-		t.Fatal("discovery option not applied")
 	}
 	if cfg.trace != trace {
 		t.Fatal("trace option not applied")
