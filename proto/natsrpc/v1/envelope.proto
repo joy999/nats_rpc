@@ -1,0 +1,15 @@
+syntax = "proto3";
+
+package natsrpc.v1;
+
+option go_package = "server/nats_rpc/proto/natsrpc/v1;natsrpcv1";
+
+message Envelope {
+  uint32 msg_id = 1;
+  uint32 rpc_id = 2;
+  bytes body = 3;
+  int32 code = 4;
+  string message = 5;
+  string trace_id = 6;
+  map<string, string> headers = 7;
+}
