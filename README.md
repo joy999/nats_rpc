@@ -7,6 +7,7 @@
 - 基于 protobuf 的统一信封协议
 - 可注册的消息号与 protobuf 类型映射
 - 可选的 typed router
+- 基于 NATS KV 的服务注册与服务发现（最终一致）
 
 核心库不依赖 GoFrame，也不依赖当前仓库的私有 `pbmsg` 协议。
 
@@ -42,3 +43,15 @@ router := natsrpc.NewRouter(reg)
 ## 说明
 
 当前版本先完成独立库抽取，主项目原有调用点尚未整体切换到这个新库。
+
+
+## 服务发现（NATS KV）
+
+新增 `Discovery` 能力：
+
+- 服务端注册实例（service + instance_id + subject）
+- 心跳续租与下线注销
+- 客户端按 service 发现并发送（支持轮询挑选实例）
+- 可直接按 instance_id 定向发送
+
+默认鉴权器为 `AllowAllAuthenticator`（不鉴权），也支持注入自定义 `ServiceAuthenticator`。

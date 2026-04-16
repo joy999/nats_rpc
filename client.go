@@ -125,3 +125,69 @@ func (c *Client) Call(ctx context.Context, subject string, req proto.Message, rs
 	}
 	return c.Request(ctx, subject, msgID, req, rsp)
 }
+
+func (c *Client) NotifyService(ctx context.Context, service string, msgID uint32, message proto.Message) error {
+	if c.cfg.discovery == nil {
+		return fmt.Errorf("notify service failed: discovery is nil")
+	}
+	instance, err := c.cfg.discovery.Pick(ctx, service)
+	if err != nil {
+		return err
+	}
+	return c.Notify(ctx, instance.Subject, msgID, message)
+}
+
+func (c *Client) NotifyServiceMessage(ctx context.Context, service string, message proto.Message) error {
+	if c.cfg.registry == nil {
+		return fmt.Errorf("notify service message failed: registry is nil")
+	}
+	msgID, ok := c.cfg.registry.MessageID(message)
+	if !ok {
+		return fmt.Errorf("notify service message failed: message %T is not registered", message)
+	}
+	return c.NotifyService(ctx, service, msgID, message)
+}
+
+func (c *Client) RequestService(ctx context.Context, service string, msgID uint32, req proto.Message, rsp proto.Message) error {
+	if c.cfg.discovery == nil {
+		return fmt.Errorf("request service failed: discovery is nil")
+	}
+	instance, err := c.cfg.discovery.Pick(ctx, service)
+	if err != nil {
+		return err
+	}
+	return c.Request(ctx, instance.Subject, msgID, req, rsp)
+}
+
+func (c *Client) CallService(ctx context.Context, service string, req proto.Message, rsp proto.Message) error {
+	if c.cfg.registry == nil {
+		return fmt.Errorf("call service failed: registry is nil")
+	}
+	msgID, ok := c.cfg.registry.MessageID(req)
+	if !ok {
+		return fmt.Errorf("call service failed: message %T is not registered", req)
+	}
+	return c.RequestService(ctx, service, msgID, req, rsp)
+}
+
+func (c *Client) NotifyInstance(ctx context.Context, service, instanceID string, msgID uint32, message proto.Message) error {
+	if c.cfg.discovery == nil {
+		return fmt.Errorf("notify instance failed: discovery is nil")
+	}
+	instance, err := c.cfg.discovery.FindInstance(ctx, service, instanceID)
+	if err != nil {
+		return err
+	}
+	return c.Notify(ctx, instance.Subject, msgID, message)
+}
+
+func (c *Client) RequestInstance(ctx context.Context, service, instanceID string, msgID uint32, req proto.Message, rsp proto.Message) error {
+	if c.cfg.discovery == nil {
+		return fmt.Errorf("request instance failed: discovery is nil")
+	}
+	instance, err := c.cfg.discovery.FindInstance(ctx, service, instanceID)
+	if err != nil {
+		return err
+	}
+	return c.Request(ctx, instance.Subject, msgID, req, rsp)
+}
